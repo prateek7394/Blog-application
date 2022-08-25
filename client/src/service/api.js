@@ -1,4 +1,7 @@
 import axios from "axios";
+
+// axios is used here to make an api call
+
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from "../constants/config";
 import { getAccessToken, getType } from "../utils/common-utils";
 const API_URL = "http://localhost:8000";
@@ -11,6 +14,7 @@ const axiosInstance = axios.create({
   },
 });
 
+// For request:
 axiosInstance.interceptors.request.use(
   function (config) {
     if(config.TYPE.params) {
@@ -19,6 +23,7 @@ axiosInstance.interceptors.request.use(
     else if(config.TYPE.query) {
       config.url = config.url + '/' + config.TYPE.query;
     }
+    console.log(config, "hello world");
     return config;
   },
   function (error) {
@@ -26,6 +31,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// For response:
 axiosInstance.interceptors.response.use(
   function (response) {
     // Stop loader here as we have got the response
@@ -61,7 +67,7 @@ const processResponse = (response) => {
 const processError = (error) => {
   if (error.response) {
     // Request made but server responded with status code
-    // that falls our of the range of 200
+    // that falls out of the range of 200
     console.log("ERROR IN RESPONSE: ", error.toJSON());
     return {
       isError: true,
@@ -83,7 +89,7 @@ const processError = (error) => {
   } else {
     // Something is wrong with front end setup
     // that triggers an error
-    console.log("ERROR IN RESPONSE: ", error.toJSON());
+    console.log("ERROR IN NETWORK: ", error.toJSON());
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.networkError,
@@ -92,6 +98,7 @@ const processError = (error) => {
   }
 };
 
+// Here we have created a common api for all the apis
 const API = {};
 
 // here key is userSignup and value is the object containing url and method

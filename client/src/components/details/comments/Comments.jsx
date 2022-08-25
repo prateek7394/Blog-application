@@ -44,13 +44,13 @@ const Comments = ({ post }) => {
   
   const { account } = useContext(DataContext);
 
+  const getData = async () => {
+    const response = await API.getAllComments(post._id);
+    if (response.isSuccess) {
+      setCommentsList(response.data);
+    }
+  };
   useEffect(() => {
-    const getData = async () => {
-      const response = await API.getAllComments(post._id);
-      if (response.isSuccess) {
-        setCommentsList(response.data);
-      }
-    };
     getData();
   }, [post, postComment]);
 
@@ -64,12 +64,17 @@ const Comments = ({ post }) => {
   };
 
   const addComment = async(e) => {
-    let response = await API.addComment(comment);
-
-    if (response.isSuccess) {
-      setComment(initialValues);
+    try{
+      let response = await API.addComment(comment);
+      if (response.isSuccess) {
+        setComment(initialValues);
+      }
+      console.log(postComment,"here ")
+      setPostComment(true);
     }
-    setPostComment(prevState => !prevState);
+    catch(error){
+      console.log(error);
+    }
   };
 
   return (

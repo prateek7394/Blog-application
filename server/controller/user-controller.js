@@ -1,3 +1,6 @@
+// this is an api
+
+
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -8,6 +11,7 @@ import Token from "../model/token.js";
 dotenv.config();
 
 export const signupUser = async (request, response) => {
+  // request contains data sent from frontend to backend including headers, body, params
   try {
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
 

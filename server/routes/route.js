@@ -9,9 +9,11 @@ import { authenticateToken } from "../controller/jwt-controller.js";
 import { addComment, getAllComments , deleteComment} from "../controller/comment-controller.js"; 
 const router = express.Router();
 
+// Routes are the endpoints of an api
+
+
 router.post('/signup', signupUser);
 router.post('/login', loginUser);
-
 // 2nd argument is a middleware 
 router.post('/file/upload', upload.single('file'),uploadImage);
 router.get('/file/:filename', getImage);
