@@ -44,7 +44,7 @@ const Comments = ({ post }) => {
   
   const { account } = useContext(DataContext);
 
-  const getData = async () => {
+  const getData = async() => {
     const response = await API.getAllComments(post._id);
     if (response.isSuccess) {
       setCommentsList(response.data);
